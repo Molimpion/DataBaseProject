@@ -1,3 +1,6 @@
+-- -----------------------------------------------------
+--inserts de dados
+-- -----------------------------------------------------
 INSERT INTO Categoria_Produto (Nome_Categoria) VALUES
 ('Camisetas'),
 ('Calças'),
