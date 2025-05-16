@@ -1,3 +1,6 @@
+-- -----------------------------------------------------
+--Alterações nas estruturas das tabelas
+-- -----------------------------------------------------
 ALTER TABLE Produto
 ADD COLUMN Status ENUM('Ativo', 'Inativo') DEFAULT 'Ativo';
 
