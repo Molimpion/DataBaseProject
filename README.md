@@ -1,74 +1,76 @@
 # DataBaseProject
 
-> Academic project developed by a trio for the Database course in the Systems Analysis and Development (ADS) program – SENAC.
+# TrioBDD Project
 
-## 👥 Project Members
+> Projeto acadêmico desenvolvido em trio para a disciplina de Banco de Dados no curso de Análise e Desenvolvimento de Sistemas (ADS) – SENAC.
+
+## 👥 Integrantes do Projeto
 
 - Maíra Lourenço (GitHub: [@MairaLourencoDEV](https://github.com/MairaLourencoDEV))
 - Manoel Olímpio (GitHub: [@Molimpion](https://github.com/Molimpion))
 - Victoria Zambom (GitHub: [@VicZambom](https://github.com/VicZambom))
 
-## 📚 Description
+## 📚 Descrição
 
-This project aims to create the schema of a relational database using MySQL. The proposal involves modeling tables with primary keys, foreign keys, constraints, and coherent relationships to represent a commercial system with sales, promotions, products, and users functionalities.
+Este projeto tem como objetivo a criação do esquema de um banco de dados relacional utilizando MySQL. A proposta envolve modelar tabelas com chaves primárias, estrangeiras, constraints e relacionamentos coerentes para representar um sistema comercial com funcionalidades de vendas, promoções, produtos e usuários.
 
-## 🗃️ Database Structure
+## 🗃️ Estrutura do Banco de Dados
 
-The database contains the following main tables:
+O banco de dados contém as seguintes tabelas principais:
 
-- `Categoria_Produto` (Product Category): Stores product categories (`idCategoria_Produto` (PK, AI), `Nome_Categoria` (UNIQUE)).
-- `Fornecedor` (Supplier): Contains supplier information (`idFornecedor` (PK, AI), `Nome_Fornecedor`, `CNPJ` (UNIQUE), `Telefone_Fornecedor`, `Email`).
-- `Produto` (Product): Product details (`idProduto` (PK, AI), `Nome_Produto`, `Preco` (Price), `idCategoria_Produto` (FK), `idFornecedor` (FK), `Status`).
-- `Estoque` (Stock): Manages inventory (`idEstoque` (PK, AI), `Quantidade` (Quantity), `Data_Entrada` (Entry Date), `idProduto` (FK)).
-- `Cliente` (Customer): Customer information (`idCliente` (PK, AI), `Nome_Cliente`, `CPF` (Brazilian ID), `Email` (NOT NULL), `Telefone` (Phone), `Endereco_Completo` (Full Address), `Data_Cadastro` (Registration Date)).
-- `Funcionario` (Employee): Employee information (`idFuncionario` (PK, AI), `Nome_Funcionario`, `CPF` (Brazilian ID), `Email`, `Ativo` (Active)).
-- `Venda` (Sale): Records sales (`idVenda` (PK, AI), `Data_Venda` (Sale Date), `Valor_Total` (Total Value), `idCliente` (FK), `idFuncionario` (FK), `Observacoes` (Observations)).
-- `Item_Venda` (Sale Item): Details of items in each sale (`idItem_Venda` (PK, AI), `Quantidade` (Quantity), `Preco_Unitario` (Unit Price), `idProduto` (FK), `idVenda` (FK)).
-- `Promocao` (Promotion): Information about promotions (`idPromocao` (PK, AI), `Nome_Promocao`, `Data_Inicio` (Start Date), `Data_Fim` (End Date), `Desconto` (Discount), `Ativo` (Active)).
-- `Produto_Promocao` (Product_Promotion): Links products to promotions (`idProduto_Promocao` (PK, AI), `idProduto` (FK), `idPromocao` (FK), `idFornecedor` (FK)).
+- `Categoria_Produto`: Armazena as categorias dos produtos (`idCategoria_Produto` (PK, AI), `Nome_Categoria` (UNIQUE)).
+- `Fornecedor`: Contém informações dos fornecedores (`idFornecedor` (PK, AI), `Nome_Fornecedor`, `CNPJ` (UNIQUE), `Telefone_Fornecedor`, `Email`).
+- `Produto`: Detalhes dos produtos (`idProduto` (PK, AI), `Nome_Produto`, `Preco`, `idCategoria_Produto` (FK), `idFornecedor` (FK), `Status`).
+- `Estoque`: Gerencia o estoque (`idEstoque` (PK, AI), `Quantidade`, `Data_Entrada`, `idProduto` (FK)).
+- `Cliente`: Informações dos clientes (`idCliente` (PK, AI), `Nome_Cliente`, `CPF` (UNIQUE), `Email` (NOT NULL), `Telefone`, `Endereco_Completo`, `Data_Cadastro`).
+- `Funcionario`: Informações dos funcionários (`idFuncionario` (PK, AI), `Nome_Funcionario`, `CPF` (UNIQUE), `Email`, `Ativo`).
+- `Venda`: Registra as vendas (`idVenda` (PK, AI), `Data_Venda`, `Valor_Total`, `idCliente` (FK), `idFuncionario` (FK), `Observacoes`).
+- `Item_Venda`: Detalhes dos itens de cada venda (`idItem_Venda` (PK, AI), `Quantidade`, `Preco_Unitario`, `idProduto` (FK), `idVenda` (FK)).
+- `Promocao`: Informações sobre as promoções (`idPromocao` (PK, AI), `Nome_Promocao`, `Data_Inicio`, `Data_Fim`, `Desconto`, `Ativo`).
+- `Produto_Promocao`: Liga produtos a promoções (`idProduto_Promocao` (PK, AI), `idProduto` (FK), `idPromocao` (FK), `idFornecedor` (FK)).
 
-Each table uses primary keys (`PRIMARY KEY`), foreign keys (`FOREIGN KEY`) for relationships, `AUTO_INCREMENT` for IDs, and referential integrity via `ON DELETE` and `ON UPDATE`.
+Cada tabela utiliza chaves primárias (`PRIMARY KEY`), chaves estrangeiras (`FOREIGN KEY`) para relacionamentos, `AUTO_INCREMENT` para IDs e integridade referencial com `ON DELETE` e `ON UPDATE`.
 
-In addition to table creation, `ALTER TABLE` statements were used to add columns (`Status` in `Produto`, `Data_Cadastro` in `Cliente`, `Observacao`/`Observacoes` in `Venda`, `Ativo` in `Promocao` and `Funcionario`, `idFornecedor` in `Produto_Promocao`), modify data types (`Telefone` and `CNPJ`), rename columns (`Endereco` to `Endereco_Completo`, `telefone` to `Telefone_Fornecedor`), and remove columns (`Cargo` from `Funcionario`).
+Além da criação das tabelas, foram utilizadas instruções `ALTER TABLE` para adicionar colunas (`Status` em `Produto`, `Data_Cadastro` em `Cliente`, `Observacao`/`Observacoes` em `Venda`, `Ativo` em `Promocao` e `Funcionario`, `idFornecedor` em `Produto_Promocao`), modificar tipos de dados (`Telefone` e `CNPJ`), renomear colunas (`Endereco` para `Endereco_Completo`, `telefone` para `Telefone_Fornecedor`), e remover colunas (`Cargo` de `Funcionario`).
 
-## 👓 Created Views
+## 👓 Views Criadas
 
-The following views were created to facilitate specific queries and analyses:
+Foram criadas as seguintes views para facilitar consultas e análises específicas:
 
-- `vw_total_vendas_por_periodo` (Total sales by period)
-- `vw_vendas_por_cliente` (Sales by customer)
-- `vw_produtos_mais_vendidos` (Best-selling products)
-- `vw_vendas_por_funcionario` (Sales by employee)
-- `vw_ticket_medio_venda` (Average sale ticket)
-- `vw_produtos_por_categoria` (Products by category)
-- `vw_produtos_estoque_baixo` (Low stock products)
-- `vw_produtos_sem_vendas_30dias` (Products without sales in 30 days)
-- `vw_produto_maior_preco` (Product with highest price)
-- `vw_produto_menor_preco` (Product with lowest price)
-- `vw_estoque_por_categoria` (Stock by category)
+- `vw_total_vendas_por_periodo`
+- `vw_vendas_por_cliente`
+- `vw_produtos_mais_vendidos`
+- `vw_vendas_por_funcionario`
+- `vw_ticket_medio_venda`
+- `vw_produtos_por_categoria`
+- `vw_produtos_estoque_baixo`
+- `vw_produtos_sem_vendas_30dias`
+- `vw_produto_maior_preco`
+- `vw_produto_menor_preco`
+- `vw_estoque_por_categoria`
 
-## 📊 Example Queries
+## 📊 Consultas (Exemplos)
 
-The database allows for various analytical queries, such as:
+O banco de dados permite realizar diversas consultas para análise, como:
 
-- Listing the total sales per day.
-- Checking the total spent by each customer.
-- Identifying the top 10 best-selling products in a period.
-- Calculating the average sales ticket.
-- Listing products with stock below 50 units.
-- And many others (see the SQL scripts for more `SELECT` examples).
+- Listar o total de vendas por dia.
+- Verificar o total gasto por cada cliente.
+- Identificar os 10 produtos mais vendidos em um período.
+- Calcular o ticket médio das vendas.
+- Listar produtos com estoque abaixo de 50 unidades.
+- E muitas outras (ver os scripts SQL para mais exemplos de `SELECT`).
 
-## 🛠️ Technologies Used
+## 🛠️ Tecnologias Utilizadas
 
 - MySQL 8.x
 - Workbench
 - Git & GitHub
 
-## 📄 SQL Scripts
+## 📄 Scripts SQL
 
-The table creation scripts are available in the main folder of this repository. To execute them:
+Os scripts de criação das tabelas estão disponíveis na pasta principal deste repositório. Para executá-los:
 
-1. Create the database:
+1. Crie o banco de dados:
    ```sql
    CREATE DATABASE IF NOT EXISTS mydb;
    USE mydb;
