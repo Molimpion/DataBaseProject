@@ -1,4 +1,4 @@
-# TrioBDD Project
+# DataBaseProject
 
 > Academic project developed by a trio for the Database course in the Systems Analysis and Development (ADS) program – SENAC.
 
