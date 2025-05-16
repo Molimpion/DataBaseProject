@@ -1,7 +1,5 @@
 # DataBaseProject
 
-# TrioBDD Project
-
 > Projeto acadêmico desenvolvido em trio para a disciplina de Banco de Dados no curso de Análise e Desenvolvimento de Sistemas (ADS) – SENAC.
 
 ## 👥 Integrantes do Projeto
