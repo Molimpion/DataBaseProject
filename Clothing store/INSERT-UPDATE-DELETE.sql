@@ -1,3 +1,5 @@
+-- SQL: DML - UPDATE
+
 UPDATE Cliente
 SET Email = 'joao.silva.novo@email.com'
 WHERE Nome_Cliente = 'João Silva';
@@ -35,6 +37,7 @@ UPDATE Categoria_Produto
 SET Nome_Categoria = 'Camisas'
 WHERE Nome_Categoria = 'Camisetas';
 
+-- SQL: DML - DELETE
 
 DELETE FROM Cliente
 WHERE Nome_Cliente = 'Carlos Pereira';
