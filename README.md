@@ -26,7 +26,7 @@ O banco de dados contém as seguintes tabelas principais:
 
 Cada tabela foi criada com o uso de `FOREIGN KEY`, `PRIMARY KEY`, `AUTO_INCREMENT` e integridade referencial via `ON DELETE` e `ON UPDATE`.
 
-##📊 Consultas
+## 📊 Consultas
 
 O banco de dados permite realizar diversas consultas para análise, como:
 
