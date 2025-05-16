@@ -8,7 +8,6 @@ DROP VIEW IF EXISTS vw_clientes_ativos;
 DROP VIEW IF EXISTS vw_mais_vendidos;
 DROP VIEW IF EXISTS vw_funcionarios_ativos;
 DROP VIEW IF EXISTS vw_clientes_compras;
-
 DROP TABLE IF EXISTS Produto_Promocao;
 DROP TABLE IF EXISTS Promocao;
 DROP TABLE IF EXISTS Item_Venda;
