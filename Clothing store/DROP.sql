@@ -1,3 +1,6 @@
+-- -----------------------------------------------------
+--Destruição do banco de dados
+-- -----------------------------------------------------
 DROP VIEW IF EXISTS vw_vendas_por_cliente;
 DROP VIEW IF EXISTS vw_estoque_baixo;
 DROP VIEW IF EXISTS vw_promocoes_ativas;
