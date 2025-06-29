@@ -20,30 +20,19 @@ BEGIN
     RETURN v_total;
 END $$
 
--- 2. Função: ObterIdadeCliente
--- Retorna a idade de um cliente com base na sua data de nascimento.
--- Assume que a tabela Cliente possui uma coluna Data_Nascimento (se não tiver, este é um exemplo conceitual)
--- Se a coluna Data_Nascimento não existir, você pode adicionar:
--- ALTER TABLE Cliente ADD COLUMN Data_Nascimento DATE;
--- UPDATE Cliente SET Data_Nascimento = '1990-05-15' WHERE idCliente = 1; (Exemplo)
-CREATE FUNCTION ObterIdadeCliente(p_idCliente INT)
+-- 2. Função: ObterQuantidadeProdutosPorCategoria
+-- Retorna o número total de produtos em uma categoria específica.
+CREATE FUNCTION ObterQuantidadeProdutosPorCategoria(p_idCategoria INT)
 RETURNS INT
 READS SQL DATA
 BEGIN
-    DECLARE v_dataNascimento DATE;
-    DECLARE v_idade INT;
+    DECLARE v_quantidade INT;
+    SELECT COUNT(idProduto)
+    INTO v_quantidade
+    FROM Produto
+    WHERE idCategoria = p_idCategoria;
 
-    SELECT Data_Nascimento INTO v_dataNascimento
-    FROM Cliente
-    WHERE idCliente = p_idCliente;
-
-    IF v_dataNascimento IS NULL THEN
-        RETURN NULL; -- Ou 0, dependendo da regra de negócio para data de nascimento ausente
-    END IF;
-
-    SET v_idade = TIMESTAMPDIFF(YEAR, v_dataNascimento, CURDATE());
-
-    RETURN v_idade;
+    RETURN v_quantidade;
 END $$
 
 -- 3. Função: VerificarEstoqueDisponivel
@@ -66,82 +55,60 @@ BEGIN
     RETURN v_quantidade;
 END $$
 
--- 4. Função: CalcularDescontoPromocional
--- Retorna o preço de um produto após aplicar o desconto de uma promoção, se aplicável.
--- Retorna o preço original se não houver promoção ou o produto não estiver nela.
-CREATE FUNCTION CalcularDescontoPromocional(p_idProduto INT, p_idPromocao INT)
+-- 4. Função: ObterPrecoMedioCategoria
+-- Retorna o preço médio dos produtos em uma categoria específica.
+CREATE FUNCTION ObterPrecoMedioCategoria(p_idCategoria INT)
 RETURNS DECIMAL(10,2)
 READS SQL DATA
 BEGIN
-    DECLARE v_precoOriginal DECIMAL(10,2);
-    DECLARE v_desconto DECIMAL(5,2);
-    DECLARE v_precoComDesconto DECIMAL(10,2);
-    DECLARE v_dataInicio DATE;
-    DECLARE v_dataFim DATE;
-
-    -- 1. Obtém o preço original do produto
-    SELECT Preco INTO v_precoOriginal
+    DECLARE v_precoMedio DECIMAL(10,2);
+    SELECT AVG(Preco)
+    INTO v_precoMedio
     FROM Produto
-    WHERE idProduto = p_idProduto;
+    WHERE idCategoria = p_idCategoria;
 
-    IF v_precoOriginal IS NULL THEN
-        RETURN NULL; -- Produto não encontrado
+    IF v_precoMedio IS NULL THEN
+        SET v_precoMedio = 0.00;
     END IF;
 
-    -- 2. Tenta obter o desconto e datas da promoção se o produto estiver nela e a promoção estiver ativa
-    SELECT p.Desconto, p.Data_Inicio, p.Data_Fim
-    INTO v_desconto, v_dataInicio, v_dataFim
-    FROM Promocao p
-    JOIN Produto_Promocao pp ON p.idPromocao = pp.idPromocao
-    WHERE pp.idProduto = p_idProduto
-    AND p.idPromocao = p_idPromocao
-    AND p.Ativo = TRUE
-    AND CURDATE() BETWEEN p.Data_Inicio AND p.Data_Fim;
-
-    -- 3. Se um desconto válido for encontrado, aplica-o
-    IF v_desconto IS NOT NULL THEN
-        SET v_precoComDesconto = v_precoOriginal * (1 - v_desconto);
-    ELSE
-        SET v_precoComDesconto = v_precoOriginal; -- Nenhum desconto aplicável, retorna o preço original
-    END IF;
-
-    RETURN v_precoComDesconto;
+    RETURN v_precoMedio;
 END $$
 
--- 5. Função: ObterNomeClientePorCPF
--- Retorna o nome completo de um cliente dado o seu CPF.
-CREATE FUNCTION ObterNomeClientePorCPF(p_cpf VARCHAR(14))
+-- 5. Função: ObterNomeFuncionarioPorId
+-- Retorna o nome completo de um funcionário dado o seu ID.
+CREATE FUNCTION ObterNomeFuncionarioPorId(p_idFuncionario INT)
 RETURNS VARCHAR(150)
 READS SQL DATA
 BEGIN
-    DECLARE v_nomeCliente VARCHAR(150);
-    SELECT Nome_Cliente INTO v_nomeCliente
-    FROM Cliente
-    WHERE CPF = p_cpf;
+    DECLARE v_nomeFuncionario VARCHAR(150);
+    SELECT Nome_Funcionario INTO v_nomeFuncionario
+    FROM Funcionario
+    WHERE idFuncionario = p_idFuncionario;
 
-    IF v_nomeCliente IS NULL THEN
-        RETURN 'Cliente não encontrado';
+    IF v_nomeFuncionario IS NULL THEN
+        RETURN 'Funcionário não encontrado';
     END IF;
 
-    RETURN v_nomeCliente;
+    RETURN v_nomeFuncionario;
 END $$
 
--- 6. Função: ContarVendasPorFuncionarioNoMes
--- Retorna o número de vendas realizadas por um funcionário em um determinado mês e ano.
-CREATE FUNCTION ContarVendasPorFuncionarioNoMes(p_idFuncionario INT, p_mes INT, p_ano INT)
+-- 6. Função: ContarItensVendidosPorProduto
+-- Retorna o total de um produto específico vendido em todas as vendas.
+CREATE FUNCTION ContarItensVendidosPorProduto(p_idProduto INT)
 RETURNS INT
 READS SQL DATA
 BEGIN
-    DECLARE v_totalVendas INT;
+    DECLARE v_totalVendido INT;
+    SELECT SUM(Quantidade)
+    INTO v_totalVendido
+    FROM Item_Venda
+    WHERE idProduto = p_idProduto;
 
-    SELECT COUNT(idVenda)
-    INTO v_totalVendas
-    FROM Venda
-    WHERE idFuncionario = p_idFuncionario
-    AND MONTH(Data_Venda) = p_mes
-    AND YEAR(Data_Venda) = p_ano;
+    IF v_totalVendido IS NULL THEN
+        SET v_totalVendido = 0;
+    END IF;
 
-    RETURN v_totalVendas;
+    RETURN v_totalVendido;
 END $$
 
 DELIMITER ;
