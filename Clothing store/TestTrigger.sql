@@ -1,4 +1,4 @@
-USE mydb; --tabela necessaria para salvar os registros da trigger
+--tabela necessaria para salvar os registros da trigger
 CREATE TABLE Log_Preco_Produto (
     idLog INT AUTO_INCREMENT PRIMARY KEY,
     idProduto INT,
